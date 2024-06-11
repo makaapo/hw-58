@@ -14,7 +14,11 @@ const App = () => {
         Order
       </button>
       {showAlert && (
-        <Alert type="warning" onDismiss={() => setShowAlert(false)}>
+        <Alert
+          clickDismissable
+          type="warning"
+          onDismiss={() => setShowAlert(false)}
+        >
           This is a warning type alert
         </Alert>
       )}

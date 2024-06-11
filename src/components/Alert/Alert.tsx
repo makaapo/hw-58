@@ -4,9 +4,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface Props extends React.PropsWithChildren {
   type: 'primary' | 'success' | 'danger' | 'warning';
   onDismiss?: React.MouseEventHandler;
+  clickDismissable?: boolean;
 }
 
-const Alert: React.FC<Props> = ({ type, onDismiss, children }) => {
+const Alert: React.FC<Props> = ({
+  type,
+  onDismiss,
+  clickDismissable,
+  children,
+}) => {
+  const handClick = (event: React.MouseEvent) => {
+    if (clickDismissable && onDismiss) {
+      onDismiss(event);
+    }
+  };
+
   return (
     <AnimatePresence>
       <motion.div
@@ -15,9 +27,10 @@ const Alert: React.FC<Props> = ({ type, onDismiss, children }) => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -50 }}
         transition={{ duration: 0.5 }}
+        onClick={handClick}
       >
         {children}
-        {onDismiss && (
+        {!clickDismissable && onDismiss && (
           <button className="btn-close" onClick={onDismiss}></button>
         )}
       </motion.div>
